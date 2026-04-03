@@ -8,7 +8,19 @@ export default function App() {
   const [output, setOutput] = useState("");
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<Mode>("brutal");
+  const [intensity, setIntensity] = useState(2);
 
+  const loadingMessages = [
+    "Analyzing your crimes against software engineering...",
+    "Reading your code with concern...",
+    "Comparing to Stack Overflow disasters...",
+    "Calculating emotional damage...",
+    "Preparing psychological report...",
+    "Summoning junior developer disappointment..."
+  ];
+
+  const [loadingText, setLoadingText] = useState(loadingMessages[0]);
+ 
   const handleRoast = async () => {
     if (!code.trim()) return;
     console.log(import.meta.env.VITE_GEMINI_API_KEY);
@@ -21,6 +33,24 @@ export default function App() {
         : mode === "passive"
         ? "Be passive-aggressive and subtly mocking."
         : "Be overly supportive and enthusiastic about bad code.";
+
+    const intensityPrompt =
+      intensity === 1
+        ? "Tone: very mild, safe humor."
+        : intensity === 2
+        ? "Tone: light teasing."
+        : intensity === 3
+        ? "Tone: balanced roasting."
+        : intensity === 4
+        ? "Tone: harsh roasting."
+        : "Tone: maximum emotional damage, but still comedic.";
+      
+    let i = 0;
+
+    const interval = setInterval(() => {
+      setLoadingText(loadingMessages[i % loadingMessages.length]);
+      i++;
+    }, 1200);
 
     try {
       const response = await fetch(
@@ -38,22 +68,35 @@ export default function App() {
                 parts: [
                   {
                     text: `
-  You are ToxicAI, a brutally funny code reviewer.
+                        You are ToxicAI, an AI-powered code reviewer designed for humor.
 
-  ${modePrompt}
+                        PERSONALITY:
+                        ${modePrompt}
 
-  Also generate fake metrics:
-  - Vibe Score (1-10)
-  - Ego Risk Level (%)
-  - Stack Overflow Dependency (%)
+                        INTENSITY:
+                        ${intensityPrompt}
 
-  Return format:
-  1. Roast
-  2. Metrics
+                        STRICT BEHAVIOR RULES:
+                        - You MUST follow BOTH personality and intensity.
+                        - Do NOT ignore intensity level.
+                        - Do NOT ignore personality mode.
+                        - Make the roast funny, not harmful or hateful.
+                        - Keep it developer-focused (code humor only).
 
-  Code:
-  ${code}
-                    `,
+                        OUTPUT FORMAT (mandatory):
+                        1. Roast
+                        2. Metrics
+                        Also include a final line:
+                        3. Verdict (one dramatic sentence about the code)     
+
+                        Metrics MUST include:
+                        - Vibe Score (1-10)
+                        - Ego Risk Level (%)
+                        - Stack Overflow Dependency (%)
+
+                        Code to review:
+                        ${code}
+                        `,
                   },
                 ],
               },
@@ -79,7 +122,8 @@ export default function App() {
         console.log("FULL ERROR:", err);
         setOutput(JSON.stringify(err?.response || err, null, 2));
     } finally {
-      setLoading(false);
+        clearInterval(interval);
+        setLoading(false);
     }
   };
   const typeText = (text: string, setOutput: (v: string) => void) => {
@@ -101,6 +145,19 @@ const copyToClipboard = () => {
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>ToxicAI Code Reviewer 💀</h1>
+
+      <div style={{ width: "80%", color: "white" }}>
+        <label>AI Brutality Level: {intensity}</label>
+
+        <input
+          type="range"
+          min="1"
+          max="5"
+          value={intensity}
+          onChange={(e) => setIntensity(Number(e.target.value))}
+          style={{ width: "100%" }}         
+        />
+      </div>
 
       {/* MODE SELECTOR */}
       <div style={styles.modes}>
@@ -131,7 +188,7 @@ const copyToClipboard = () => {
 
       <div style={styles.outputBox}>
         {loading ? (
-          <p>Analyzing poor life choices...</p>
+          <p>{loadingText}</p>
         ) : (
           <div style={{ whiteSpace: "pre-wrap", lineHeight: "1.6" }}>
             {output || "Your AI roast will appear here..."}
