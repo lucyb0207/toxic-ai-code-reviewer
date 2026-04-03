@@ -9,35 +9,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<Mode>("brutal");
 
-  const roasts = {
-    brutal: [
-      "This code has the structural integrity of a wet paper towel.",
-      "I’ve seen better logic in a toaster manual.",
-      "This works… which is surprising, honestly.",
-    ],
-    passive: [
-      "Interesting approach… I wouldn’t have chosen it, but it’s certainly something.",
-      "This is one way to do it. Not a good way, but a way.",
-      "It technically runs, so that’s progress I guess.",
-    ],
-    supportive: [
-      "Great effort! Every line of code is a step forward 💪",
-      "This is a solid foundation to build on!",
-      "You’re doing amazing — keep going!",
-    ],
-  };
-
-  const fakeMetrics = () => {
-    const vibe = Math.floor(Math.random() * 10) + 1;
-    const ego = Math.floor(Math.random() * 100);
-
-    return `
-Vibe Score: ${vibe}/10
-Ego Risk Level: ${ego}%
-Stack Overflow Dependency: ${Math.floor(Math.random() * 100)}%
-    `;
-  };
-
   const handleRoast = async () => {
     if (!code.trim()) return;
     console.log(import.meta.env.VITE_GEMINI_API_KEY);
@@ -91,9 +62,7 @@ Stack Overflow Dependency: ${Math.floor(Math.random() * 100)}%
         }
       );
 
-      const data = await response.json();
-      console.log("STATUS:", response.status);
-console.log("DATA:", data);
+    const data = await response.json();
 
      if (!response.ok) {
       throw new Error(data?.error?.message || "Gemini API request failed");
