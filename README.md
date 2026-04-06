@@ -6,6 +6,12 @@ Built for the DEV April Fools Challenge.
 
 ---
 
+## 🎥 Demo
+
+![ToxicAI Demo](./assets/demo.gif)
+
+---
+
 ## What It Does
 
 Paste your code → get instantly judged by an AI that behaves like a senior developer who has lost patience with humanity.
@@ -15,7 +21,7 @@ ToxicAI analyses your code and responds with:
 - fake developer metrics
 - a dramatic final verdict
 
-All completely useless. All completely intentional.
+Designed to be entertaining, not useful.
 
 ---
 
@@ -31,7 +37,7 @@ All completely useless. All completely intentional.
   - Vibe Score
   - Ego Risk Level
   - Stack Overflow Dependency
-- Dramatic Loading System (“AI is judging your life choices…”)
+- Dramatic loading state (“AI is judging your life choices…”)
 - One-click Copy Roast
 - Structured Output:
   - Roast
@@ -40,11 +46,25 @@ All completely useless. All completely intentional.
 
 ---
 
+## How It Works
+
+1. User submits a code snippet
+2. Input is sent to Gemini 2.5 Flash API
+3. A structured prompt defines tone, personality, and output format
+4. AI generates:
+   - roast
+   - fake metrics
+   - final verdict
+5. Response is parsed and displayed in a styled UI
+
+---
+
 ## Tech Stack
 
 - React (Vite)
 - TypeScript
-- Gemini 2.5 Flash API
+- Gemini 2.5 Flash API (Google AI)
+- Prompt engineering for structured emotional outputs
 
 ---
 
@@ -55,6 +75,8 @@ This project solves absolutely nothing.
 It exists purely to:
 - demonstrate AI integration
 - emotionally evaluate developers for entertainment purposes only
+
+This project explores prompt engineering, structured AI outputs, and personality-driven LLM design.
 
 ---
 
@@ -72,13 +94,23 @@ Use at your own emotional risk.
 
 ## 🔥 Submission Category
 
-**Best Google AI Usage **
+**Best Google AI Usage**
 
 Leveraging Gemini to generate:
 - personality-driven code roasts
 - structured fake metrics
 - dynamic developer “evaluation”
 - comedic AI reasoning output
+
+---
+
+## 🚀 Future Improvements
+
+- More personality modes (e.g. “Tech Lead Burnout”, “Intern Supervisor Mode”)
+- Custom prompt builder for user-defined roasting style
+- Export/share roast images
+- Support for GitHub repo roasting
+- Improved structured output parsing
 
 ---
 
